@@ -62,6 +62,7 @@ export const isAuthenticated = () => {
     return false
   }
   if (localStorage.getItem('jwt')) {
+    //Verificar na API se ele o token é valido
     return JSON.parse(localStorage.getItem('jwt'))
   } else {
     return false

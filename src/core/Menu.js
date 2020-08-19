@@ -46,7 +46,7 @@ const Menu = ({ history }) => (
         <Fragment>
           <li className="nav-item">
             <Link
-              style={isActive(history, "/dashboard")}
+              style={isActive(history, "/user/dashboard")}
               className="nav-link"
               to="/dashboard"
             >
