@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 const isActive = (history, path) => {
@@ -43,19 +43,30 @@ const Menu = ({ history }) => (
       )}
 
       {isAuthenticated() && (
-        <li className="nav-item">
-          <span
-            style={{ cursor: "pointer", color: "#ffffff" }}
-            className="nav-link"
-            onClick={() =>
-              signout(() => {
-                history.push("/");
-              })
-            }
-          >
-            Signout
-          </span>
-        </li>
+        <Fragment>
+          <li className="nav-item">
+            <Link
+              style={isActive(history, "/dashboard")}
+              className="nav-link"
+              to="/dashboard"
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <span
+              style={{ cursor: "pointer", color: "#ffffff" }}
+              className="nav-link"
+              onClick={() =>
+                signout(() => {
+                  history.push("/");
+                })
+              }
+            >
+              Signout
+            </span>
+          </li>
+        </Fragment>
       )}
     </ul>
   </div>
