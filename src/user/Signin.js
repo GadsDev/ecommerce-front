@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
 import { Redirect } from "react-router-dom";
-import { signin } from "../auth";
+import { signin, authenticate } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -16,7 +16,7 @@ const Signin = () => {
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
- 
+
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false, loading: false });
@@ -24,14 +24,16 @@ const Signin = () => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          redirectToReferrer: true,
+        authenticate(data, () => {
+          setValues({
+            ...values,
+            redirectToReferrer: true,
+          });
         });
       }
     });
   };
-    
+
   const signinUpForm = () => (
     <form>
       <div className="form-group">
@@ -67,17 +69,16 @@ const Signin = () => {
     </div>
   );
 
-  const showLoading = () => (      
+  const showLoading = () =>
     loading && (
       <div className="alert alert-info">
         <h2>Loading...</h2>
       </div>
-    )
-  )
+    );
 
   const redirectUser = () => {
-      if (redirectToReferrer) {
-        return <Redirect to="/" />
+    if (redirectToReferrer) {
+      return <Redirect to="/" />;
     }
   };
 
@@ -87,7 +88,7 @@ const Signin = () => {
       description="Node React E-commerce App"
       className="container col-md-8 offset-md-2"
     >
-      {showLoading()}   
+      {showLoading()}
       {showError()}
       {signinUpForm()}
       {redirectUser()}
