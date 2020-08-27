@@ -8,6 +8,19 @@ export const getProducts = (sortBy) => {
         return response.json();
       })
       .catch((err) => {
-        console.log("getCategories err", err);
+        console.log("getProducts err", err);
       });
-  };
+};
+
+export const getCategories = () => {
+  return fetch(`${API}/category`, {
+    method: "GET"  
+  })
+    .then((response) =>
+    {     
+      return response.json();
+    })
+    .catch((err) => {
+      console.log("getCategories err", err);
+    });
+};
