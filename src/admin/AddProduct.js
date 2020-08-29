@@ -42,7 +42,6 @@ const AddProduct = () => {
   // Load
   const init = () => {
     getCategories().then((data) => {
-      console.log("data", data);
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {

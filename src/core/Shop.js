@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import Card from "./Card";
-import { getCategories } from './apiCore'
-import Checkbox from './Checkbox'
+import { getCategories } from "./apiCore";
+import Checkbox from "./Checkbox";
 
 const Shop = () => {
+  const [myFilters, setMyFilters] = useState({
+    filters: { category: [], price: [] },
+  });
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
 
   // Load
   const init = () => {
-    getCategories().then(data => {
+    getCategories().then((data) => {
       if (data.error) {
         setError({ ...data, error: data.error });
       } else {
@@ -23,6 +26,17 @@ const Shop = () => {
     init();
   }, []);
 
+  /**
+   *
+   * @param {*} filters Values of Filter
+   * @param {*} filterBy Category or Price
+   */
+  const handleFilters = (filters, filterBy) => {
+    const newFilters = { ...myFilters };
+    newFilters.filters[filterBy] = filters;
+    setMyFilters(newFilters);
+  };
+
   return (
     <Layout
       title="Home Page"
@@ -32,12 +46,14 @@ const Shop = () => {
       <div className="row">
         <div className="col-4">
           <h4>Filter by categories</h4>
-          <ul>
-          <Checkbox categories={categories}/>
-          </ul>          
-        </div>
 
-       
+          <ul>
+            <Checkbox
+              categories={categories}
+              handleFilters={(filters) => handleFilters(filters, "category")}
+            />
+          </ul>
+        </div>
       </div>
     </Layout>
   );

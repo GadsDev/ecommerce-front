@@ -18,6 +18,7 @@ export const getCategories = () => {
   })
     .then((response) =>
     {     
+      console.log("RESPONSE", response);
       return response.json();
     })
     .catch((err) => {
