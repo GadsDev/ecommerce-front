@@ -14,7 +14,7 @@ const Shop = () => {
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
   const [skip, setSkip] = useState(0);
-  const [filtersResults, setFiltersResults] = useState(0);
+  const [filtersResults, setFiltersResults] = useState([]);
 
   // Load
   const init = () => {
@@ -32,7 +32,7 @@ const Shop = () => {
       if (data.error) {
         setError(data.error)
       } else {
-        setFiltersResults(data)
+        setFiltersResults(data.data)
       }
     })
   }
@@ -95,7 +95,16 @@ const Shop = () => {
             />
           </div>
         </div>
-        <div className="col-8">{JSON.stringify(filtersResults)}</div>
+        <div className="col-8">
+          <h2 className="mb-4">Products</h2>
+          <div className="row">
+            {filtersResults.map((product, i) => (
+              
+                <Card key={i}  product={product} />
+             
+            ))}
+          </div>
+        </div>
       </div>
     </Layout>
   );
